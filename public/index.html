@@ -1,9 +1,28 @@
 <!doctype html>
 <html>
   <head>
+    <link href="https://redux-form.com/6.4.3/bundle.css"
+      media="screen, projection"
+      rel="stylesheet" type="text/css"/>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
+      media="screen, projection" rel="stylesheet" type="text/css"/>
+
   </head>
   <body>
     <div id=main></div>
-    <script async defer src=/bundle.js></script>    
+
+    <script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCBa8jn0vH91pd38N_dlBwLSUwNmTOUyG4",
+        authDomain: "fiend-arrays-form.firebaseapp.com",
+        databaseURL: "https://fiend-arrays-form.firebaseio.com",
+        storageBucket: "fiend-arrays-form.appspot.com",
+        messagingSenderId: "939996204890"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <script async defer src=/bundle.js></script>
   </body>
-</html> 
+</html>
