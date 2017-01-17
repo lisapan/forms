@@ -1,7 +1,7 @@
 import React from 'react'
-import FieldArraysForm from './FieldArraysForm';
+import SimpleForm from './SimpleForm';
 
-class WizardPage extends React.Component {
+class SimpleFormPage extends React.Component {
 
   handleSubmit = (values) => {
     new Promise(resolve => {
@@ -14,9 +14,9 @@ class WizardPage extends React.Component {
 
   render() {
     return (
-      <FieldArraysForm onSubmit={this.handleSubmit} />
+      <SimpleForm onSubmit={this.handleSubmit} />
     );
   }
 }
 
-export default WizardPage
+export default SimpleFormPage

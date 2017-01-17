@@ -7,7 +7,8 @@ import axios from 'axios';
 import store from './store'
 
 import App from './components/App'
-import WizardPage from './components/WizardPage'
+import SimpleFormPage from './components/SimpleFormPage'
+import MenuFormPage from './components/MenuFormPage'
 
 
 export default () => {
@@ -15,7 +16,8 @@ export default () => {
     <Provider store={store}>
       <Router history={browserHistory}>
         <Route path="/" component={App}>
-          <IndexRoute component={WizardPage}/>
+          <IndexRoute component={SimpleFormPage}/>
+          <Route path="menuWizard" component={MenuFormPage}/>
         </Route>
       </Router>
     </Provider>

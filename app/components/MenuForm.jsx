@@ -150,7 +150,7 @@ const renderModifierOptions = ({ fields, meta: { error } }) => (
   </ul>
 )
 
-const FieldArraysForm = (props) => {
+const MenuForm = (props) => {
   const { handleSubmit, pristine, reset, submitting } = props
   return (
     <form onSubmit={handleSubmit}>
@@ -165,6 +165,6 @@ const FieldArraysForm = (props) => {
 }
 
 export default reduxForm({
-  form: 'fieldArrays',     // a unique identifier for this form
+  form: 'menuForm',     // a unique identifier for this form
   validate
-})(FieldArraysForm)
+})(MenuForm)
