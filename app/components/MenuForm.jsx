@@ -1,166 +1,198 @@
 import React from 'react'
 import { Field, FieldArray, reduxForm } from 'redux-form'
+import { Card, Button, Input, Label, Form, Accordion, Icon} from 'semantic-ui-react'
 import validate from './validate'
 
 const renderField = ({ input, label, type, meta: { touched, error } }) => (
-  <div>
-    <label>{label}</label>
-    <div>
-      <input {...input} type={type} placeholder={label}/>
+      <Form.Field>
+        <Input {...input} type={type} placeholder={label}/>
+        {touched && error && <span>{error}</span>}
+      </Form.Field>
+)
+
+const renderNameInput=({ input, label, type, meta: { touched, error} }) => (
+    <Form.Field>
+      <Input className="header-field" transparent {...input} type={type} placeholder={label} />
       {touched && error && <span>{error}</span>}
-    </div>
-  </div>
+    </Form.Field>
 )
 
 const renderMenus = ({ fields, meta: { touched, error } }) => (
-  <ul>
-    <li>
-      <button type="button" onClick={() => fields.push({})}>Add Menu</button>
-      {touched && error && <span>{error}</span>}
-    </li>
+  <div>
+    <Button type="button" onClick={() => fields.push({})}>Add Menu</Button>
+    {touched && error && <span>{error}</span>}
+    <Card.Group id="cardContainer" >
     {fields.map((menu, index) =>
-      <li key={index}>
-        <button
-          type="button"
-          title="Remove Menu"
-          onClick={() => fields.remove(index)}/>
-        <h4>Menu #{index + 1}</h4>
-        <Field
-          name={`${menu}.name`}
-          type="text"
-          component={renderField}
-          label="Menu Name"/>
-        <FieldArray name={`${menu}.groups`} component={renderGroups}/>
-      </li>
+      <div key={index} className="cardDiv">
+      <Card>
+        <Card.Header className="header">
+          <Field
+            name={`${menu}.name`}
+            type="text"
+            component={renderNameInput}
+            label="Enter Menu Name"/>
+          <Button
+            circular className='remove-btn' floated='right' type='button' size='mini' icon='remove'
+            onClick={() => fields.remove(index)}/>
+        </Card.Header>
+      </Card>
+      <FieldArray name={`${menu}.groups`} component={renderGroups}/>
+      </div>
     )}
-  </ul>
+    </Card.Group>
+  </div>
+
 )
 
 const renderGroups = ({ fields, meta: { touched, error } }) => (
-  <ul>
-    <li>
-      <button type="button" onClick={() => fields.push()}>Add Group</button>
-      {touched && error && <span>{error}</span>}
-    </li>
-    {fields.map((group, index) =>
-      <li key={index}>
-        <button
-          type="button"
-          title="Remove Group"
-          onClick={() => fields.remove(index)}/>
-        <Field
-          name={`${group}.name`}
-          type="text"
-          component={renderField}
-          label="Group Name"/>
-        <FieldArray name={`${group}.items`} component={renderItems}/>
-      </li>
-    )}
+  <div>
+    <Button type="button" onClick={() => fields.push()}>Add Group</Button>
+    {touched && error && <span>{error}</span>}
+    <Accordion>
+      <Accordion.Title>
+        <Icon name='dropdown' />
+        Groups
+      </Accordion.Title>
+      <Accordion.Content>
+        {fields.map((group, index) =>
+          <div key={index}>
+            <Card>
+              <Card.Header className="header">
+                <Field
+                  name={`${group}.name`}
+                  type="text"
+                  component={renderNameInput}
+                  label="Enter Group Name"/>
+                <Button
+                circular className='remove-btn' floated='right' type='button' size='mini' icon='remove'
+                onClick={() => fields.remove(index)}/>
+              </Card.Header>
+            </Card>
+            <FieldArray name={`${group}.items`} component={renderItems}/>
+          </div>
+        )}
+      </Accordion.Content>
+    </Accordion>
     {error && <li className="error">{error}</li>}
-  </ul>
+  </div>
 )
 
 const renderItems = ({ fields, meta: { touched, error } }) => (
-  <ul>
-    <li>
-      <button type="button" onClick={() => fields.push()}>Add Item</button>
-      {touched && error && <span>{error}</span>}
-    </li>
-    {fields.map((item, index) =>
-      <li key={index}>
-        <button
-          type="button"
-          title="Remove Item"
-          onClick={() => fields.remove(index)}/>
-        <Field
-          name={`${item}.name`}
-          type="text"
-          component={renderField}
-          label="Item Name"/>
-        <Field
-          name={`${item}.price`}
-          type="text"
-          component={renderField}
-          label="Price"/>
-        <Field
-          name={`${item}.posName`}
-          type="text"
-          component={renderField}
-          label="Button Name"/>
-        <Field
-          name={`${item}.kitchenName`}
-          type="text"
-          component={renderField}
-          label="Kitchen Name"/>
-        <FieldArray name={`${item}.modifierGroups`} component={renderModifierGroups}/>
-      </li>
-    )}
+  <div>
+    <Button type="button" onClick={() => fields.push()}>Add Item</Button>
+    {touched && error && <span>{error}</span>}
+    <Accordion>
+      <Accordion.Title>
+        <Icon name='dropdown' />
+        Items
+      </Accordion.Title>
+      <Accordion.Content>
+        {fields.map((item, index) =>
+          <div key={index}>
+            <Card>
+              <Card.Header>
+                <Field
+                  name={`${item}.name`}
+                  type="text"
+                  component={renderNameInput}
+                  label="Enter Item Name"/>
+                <Button
+                circular className='remove-btn' floated='right' type='button' size='mini' icon='remove'
+                onClick={() => fields.remove(index)}/>
+              </Card.Header>
+              <Card.Content>
+                <Field
+                  name={`${item}.price`}
+                  type="text"
+                  component={renderField}
+                  label="Price"/>
+                <Field
+                  name={`${item}.posName`}
+                  type="text"
+                  component={renderField}
+                  label="Button Name"/>
+                <Field
+                  name={`${item}.kitchenName`}
+                  type="text"
+                  component={renderField}
+                  label="Kitchen Name"/>
+              </Card.Content>
+            </Card>
+            <FieldArray name={`${item}.modifierGroups`} component={renderModifierGroups}/>
+          </div>
+        )}
+      </Accordion.Content>
+    </Accordion>
     {error && <li className="error">{error}</li>}
-  </ul>
+  </div>
 )
 
 const renderModifierGroups = ({ fields, meta: { touched, error } }) => (
-  <ul>
-    <li>
-      <button type="button" onClick={() => fields.push()}>Add Modifier Group</button>
+  <div>
+
+      <Button type="button" onClick={() => fields.push()}>Add Modifier Group</Button>
       {touched && error && <span>{error}</span>}
-    </li>
+
     {fields.map((group, index) =>
-      <li key={index}>
-        <button
-          type="button"
-          title="Remove Modifier Group"
-          onClick={() => fields.remove(index)}/>
+      <Card key={index}>
+        <Card.Header>
         <Field
           name={`${group}.name`}
           type="text"
-          component={renderField}
-          label="Modifier Group Name"/>
+          component={renderNameInput}
+          label="Enter Modifier Name"/>
+          <Button
+          circular className='remove-btn' floated='right' type='button' size='mini' icon='remove'
+          onClick={() => fields.remove(index)}/>
+        </Card.Header>
+        <Card.Content>
         <FieldArray name={`${group}.options`} component={renderModifierOptions}/>
-      </li>
+        </Card.Content>
+      </Card>
     )}
     {error && <li className="error">{error}</li>}
-  </ul>
+  </div>
 )
 
 const renderModifierOptions = ({ fields, meta: { error } }) => (
-  <ul>
-    <li>
-      <button type="button" onClick={() => fields.push()}>Add Option</button>
-    </li>
+  <div>
+
+      <Button type="button" onClick={() => fields.push()}>Add Option</Button>
+
     {fields.map((item, index) =>
-      <li key={index}>
-        <button
-          type="button"
-          title="Remove Item"
-          onClick={() => fields.remove(index)}/>
+      <Card key={index}>
+        <Card.Header>
         <Field
           name={`${item}.name`}
           type="text"
-          component={renderField}
-          label="Option Name"/>
+          component={renderNameInput}
+          label="Enter Option Name"/>
+          <Button
+          circular className='remove-btn' floated='right' type='button' size='mini' icon='remove'
+          onClick={() => fields.remove(index)}/>
+        </Card.Header>
+        <Card.Content>
         <Field
           name={`${item}.price`}
           type="text"
           component={renderField}
           label="Price"/>
-      </li>
+        </Card.Content>
+      </Card>
     )}
     {error && <li className="error">{error}</li>}
-  </ul>
+  </div>
 )
 
 const MenuForm = (props) => {
   const { handleSubmit, pristine, reset, submitting } = props
   return (
-    <form onSubmit={handleSubmit}>
-      <Field name="restaurantName" type="text" component={renderField} label="Restaurant Name"/>
+    <Form onSubmit={handleSubmit}>
+      <Field name="restaurantName" type="text" component={renderNameInput} label="Restaurant Name"/>
       <FieldArray name="menus" component={renderMenus}/>
-      <div>
-        <button type="submit" disabled={submitting}>Submit</button>
-        <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
-      </div>
-    </form>
+      <Button type="submit" disabled={submitting}>Submit</Button>
+      <Button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</Button>
+    </Form>
   )
 }
 

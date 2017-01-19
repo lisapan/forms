@@ -1,0 +1,20 @@
+.reactFormInput {
+   max-width: 500px;
+}
+
+#cardContainer {
+  padding: 50px;
+}
+
+.cardDiv{
+  margin: 5px;
+}
+.header {
+  display: inline;
+}
+
+.remove-btn{
+  position: relative;
+  right: 15px !important;
+  bottom: 15px !important
+}
